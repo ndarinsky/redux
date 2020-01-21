@@ -1,6 +1,12 @@
 const CREATE_NOTE = 'CREATE_NOTE';
 const UPDATE_NOTE = 'UPDATE_NOTE';
 
+
+const initialState = {
+  nextNoteId: 1,
+  notes: {}
+};
+
 /**
  * PURE functions. NEVER change\mutate state directly.
  * Don't change the state. Instead, create shallow copies of the state and any nested objects/arrays
@@ -42,3 +48,5 @@ const reducer = (state = initialState, action) => {
         return state;
     }
   };
+
+  export default reducer;
