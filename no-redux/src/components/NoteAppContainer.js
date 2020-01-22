@@ -1,5 +1,6 @@
 import NoteApp from "./NoteApp";
 import connect from './../redux/connect'
+import api from './../redux/fakeApi'
 
 const CREATE_NOTE = "CREATE_NOTE";
 const UPDATE_NOTE = "UPDATE_NOTE";
@@ -20,8 +21,17 @@ const mapStateToProps = state => ({
  * @param {*} dispatch 
  */
 const mapDispatchToProps = dispatch => ({
-  onAddNote: () => dispatch({
-    type: CREATE_NOTE
+  onAddNote: () => dispatch((dispatch) => {
+    dispatch({
+      type: CREATE_NOTE
+    });
+    api.createNote()
+      .then(({id}) => {
+        dispatch({
+          type: CREATE_NOTE,
+          id
+        });
+      });
   }),
   onChangeNote: (id, content) => dispatch({
     type: UPDATE_NOTE,

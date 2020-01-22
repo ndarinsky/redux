@@ -4,9 +4,9 @@ const OPEN_NOTE = "OPEN_NOTE";
 const CLOSE_NOTE = "CLOSE_NOTE";
 
 const initialState = {
-  nextNoteId: 1,
   notes: {},
-  openNoteId: undefined
+  openNoteId: null,
+  isLoading: false
 };
 
 /**
@@ -18,17 +18,23 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_NOTE: {
-      const id = state.nextNoteId;
+      if (!action.id) {
+        return {
+          ...state,
+          isLoading: true
+        };
+      }
       const newNote = {
-        id,
-        content: ""
+        id: action.id,
+        content: ''
       };
       return {
         ...state,
-        nextNoteId: id + 1,
+        isLoading: false,
+        openNoteId: action.id,
         notes: {
           ...state.notes,
-          [id]: newNote
+          [action.id]: newNote
         }
       };
     }
